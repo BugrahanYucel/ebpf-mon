@@ -1,0 +1,26 @@
+[package]
+name = "ebpf-mon-common"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+default = []
+user = ["aya", "thiserror", "serde", "serde_json", "log"]
+
+[build-dependencies]
+bindgen = "0.69.2"
+
+[dependencies]
+aya = { workspace = true, optional = true }
+aya-ebpf = { workspace = true }
+
+cfg-if = { workspace = true }
+paste = { workspace = true }
+serde = { workspace = true, features = ["derive"], optional = true }
+serde_json = { version = "1.0", optional = true }
+log = { version = "0.4", optional = true }
+thiserror = { workspace = true, optional = true }
+
+
+[lib]
+path = "src/lib.rs"
