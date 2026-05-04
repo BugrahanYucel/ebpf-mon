@@ -2,7 +2,7 @@
 
 eBPF-based security monitoring tool for tracking network, filesystem, and process events in containers and cgroups.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Run Monitoring Tool
 ```bash
@@ -24,7 +24,7 @@ cd test-harness
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 | Document | Purpose |
 |----------|---------|
@@ -34,7 +34,7 @@ cd test-harness
 
 ---
 
-## 🎯 What It Does
+## What It Does
 
 Monitors:
 - **Network Events**: TCP/UDP connections (incoming/outgoing)
@@ -48,7 +48,7 @@ Outputs:
 
 ---
 
-## 🔧 Build Process
+## Build Process
 
 ### Manual Build
 ```bash
@@ -71,7 +71,7 @@ Builds and runs automatically!
 
 ---
 
-## 🧪 Testing & Validation
+## Testing & Validation
 
 ### Automated Docker Testing
 ```bash
@@ -97,7 +97,7 @@ python3 compare_results.py ground_truth.json ../ebpf-mon/events.json
 
 ---
 
-## 📊 Example Output
+## Example Output
 
 ```json
 {
@@ -134,7 +134,7 @@ python3 compare_results.py ground_truth.json ../ebpf-mon/events.json
 
 ---
 
-## 🎓 Key Concepts
+## Key Concepts
 
 ### Event Deduplication
 
@@ -203,7 +203,7 @@ ebpf-mon/
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### "Permission denied"
 -> Tool needs sudo (handled automatically by `run-ebpf.sh`)
@@ -233,7 +233,7 @@ ls -la /sys/fs/cgroup/
 
 ---
 
-## 🎯 Use Cases
+## Use Cases
 
 ### Development
 ```bash
@@ -268,7 +268,7 @@ kill $EBPF_PID
 
 ---
 
-## 📖 Learn More
+## Learn More
 
 - **[RUN_EBPF_GUIDE.md](RUN_EBPF_GUIDE.md)** - Complete guide to running the tool
 - **[test-harness/QUICKSTART.md](test-harness/QUICKSTART.md)** - Fast-track testing
