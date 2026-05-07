@@ -1,0 +1,108 @@
+
+======================================================================
+eBPF MONITORING TOOL VALIDATION REPORT
+======================================================================
+
+======================================================================
+NETWORK EVENTS COMPARISON
+======================================================================
+
+📊 Summary:
+  Ground Truth: 7 unique events
+  eBPF Captured: 7 unique events
+  Matched: 7 ✓
+  Missed: 0 ✗
+  Extra (not in ground truth): 0 ⚠
+
+✓ Matched Events (7):
+  ✓ 1.1.1.1:53 (outgoing) - GT freq: 3, eBPF freq: 3
+  ✗ 1.1.1.1:443 (outgoing) - GT freq: 5, eBPF freq: 10
+  ✗ 142.250.185.46:443 (outgoing) - GT freq: 1, eBPF freq: 2
+  ✓ 8.8.8.8:80 (outgoing) - GT freq: 1, eBPF freq: 1
+  ✗ 8.8.8.8:443 (outgoing) - GT freq: 1, eBPF freq: 2
+  ✓ 8.8.8.8:8080 (outgoing) - GT freq: 1, eBPF freq: 1
+  ✓ 93.184.216.34:443 (outgoing) - GT freq: 1, eBPF freq: 1
+
+======================================================================
+FILESYSTEM EVENTS COMPARISON
+======================================================================
+
+📊 Summary:
+  Ground Truth: 13 unique events
+  eBPF Captured: 165 unique events
+  Matched: 13 ✓
+  Missed: 0 ✗
+  Extra (not in ground truth): 152 ⚠
+
+✓ Matched Events (13):
+  ✗ /tmp/ebpf_test/test_write.txt (write) - GT freq: 5, eBPF freq: 1
+  ✗ /tmp/ebpf_test/test_read.txt (read) - GT freq: 5, eBPF freq: 1
+  ✓ /tmp/ebpf_test/file_1.txt (write) - GT freq: 1, eBPF freq: 1
+  ✓ /tmp/ebpf_test/file_1.txt (read) - GT freq: 1, eBPF freq: 1
+  ✓ /tmp/ebpf_test/file_2.txt (write) - GT freq: 1, eBPF freq: 1
+  ✓ /tmp/ebpf_test/file_0.txt (read) - GT freq: 1, eBPF freq: 1
+  ✓ /etc/resolv.conf (read) - GT freq: 1, eBPF freq: 1
+  ✓ /etc/hosts (read) - GT freq: 1, eBPF freq: 1
+  ✓ /tmp/ebpf_test/file_0.txt (write) - GT freq: 1, eBPF freq: 1
+  ✓ /proc/7/status (read) - GT freq: 1, eBPF freq: 1
+  ... and 3 more
+
+⚠ Extra Events (152) - Showing top 10:
+  + /usr/local/lib/python3.9/urllib/parse.py (read) - inode: 2403131, freq: 1
+  + /usr/local/lib/python3.9/fnmatch.py (read) - inode: 2401495, freq: 1
+  + /usr/local/lib/python3.9/__pycache__/socket.cpython-39.pyc.138978815381664 (write) - inode: 2403342, freq: 1
+  + /usr/local/lib/python3.9/__pycache__/enum.cpython-39.pyc.138978815679936 (write) - inode: 2403326, freq: 1
+  + /usr/local/lib/python3.9/lib-dynload/_socket.cpython-39-x86_64-linux-gnu.so (read) - inode: 2401681, freq: 1
+  + /usr/local/lib/python3.9/__pycache__/lzma.cpython-39.pyc.138978814191968 (write) - inode: 2403372, freq: 1
+  + /usr/lib/x86_64-linux-gnu/libpcre2-8.so.0.14.0 (read) - inode: 2369746, freq: 1
+  + /usr/local/lib/python3.9/site-packages/_distutils_hack/__init__.py (read) - inode: 2401886, freq: 1
+  + /proc/7/task/7/attr/apparmor/exec (write) - inode: 62642478, freq: 1
+  + /usr/local/lib/python3.9/__pycache__/fnmatch.cpython-39.pyc.138978814581872 (write) - inode: 2403352, freq: 1
+  ... and 142 more
+
+======================================================================
+PROCESS EVENTS COMPARISON
+======================================================================
+
+📊 Summary:
+  Ground Truth: 5 unique events
+  eBPF Captured: 7 unique events
+  Matched: 5 ✓
+  Missed: 0 ✗
+  Extra (not in ground truth): 2 ⚠
+
+✓ Matched Events (5):
+  ✓ /usr/bin/cat (execve) - GT freq: 1, eBPF freq: 1
+  ✗ /usr/bin/echo (execve) - GT freq: 3, eBPF freq: 1
+  ✓ /usr/bin/ls (execve) - GT freq: 1, eBPF freq: 1
+  ✓ /usr/bin/pwd (execve) - GT freq: 1, eBPF freq: 1
+  ✗ /usr/local/bin/python3.9 (fork) - GT freq: 2, eBPF freq: 1
+
+⚠ Extra Events (2):
+  + /usr/bin/dash (execve) - inode: 2369115, freq: 1
+  + /usr/local/bin/python3.9 (execve) - inode: 2400953, freq: 1
+
+======================================================================
+OVERALL VALIDATION SUMMARY
+======================================================================
+
+📈 Overall Statistics:
+  Total Ground Truth Events: 25
+  Total Matched: 25 (100.0%)
+  Total Missed: 0 (0.0%)
+  Total Extra: 154
+
+  Overall Accuracy: 100.00%
+
+📊 Per-Category Accuracy:
+  Network:  100.0%
+  Filesystem: 100.0%
+  Process:  100.0%
+
+======================================================================
+✅ EXCELLENT: Tool captures >95% of ground truth events
+======================================================================
+
+ℹ Note: 154 extra events were captured by eBPF.
+  This is normal - the tool captures system background activity.
+  Focus on ensuring ground truth events are NOT in the 'missed' category.

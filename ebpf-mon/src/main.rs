@@ -213,9 +213,9 @@ async fn main() -> anyhow::Result<()> {
             .map_err(|e| anyhow::anyhow!("Failed to load policy: {}", e))?;
 
         let mode_str = if args.audit_only { "AUDIT-ONLY" } else { "ENFORCING" };
-        println!("Enforcement: {} ({} inode rules, {} pattern rules, {} exec rules, {} net rules)",
-            mode_str, stats.inode_rules, stats.pattern_rules,
-            stats.exec_inode_rules, stats.net_rules);
+        println!("Enforcement: {} ({} path rules, {} pattern rules, {} exec rules, {} net rules)",
+            mode_str, stats.path_rules, stats.pattern_rules,
+            stats.exec_path_rules, stats.net_rules);
 
         if let Some(audit_map) = ebpf.take_map("AUDIT_EVENTS") {
             tokio::spawn(async move {
@@ -372,7 +372,12 @@ async fn main() -> anyhow::Result<()> {
                                     }
                                 }
                                 ContainerStateChange::Error(msg) => {
-                                    error!("Container watcher error: {}", msg);
+                                    if msg.contains("was removed") {
+                                        info!("Container was removed, watcher exiting");
+                                    } else {
+                                        error!("Container watcher error: {}", msg);
+                                    }
+                                    break;
                                 }
                             }
                         }
@@ -380,7 +385,6 @@ async fn main() -> anyhow::Result<()> {
                             // No messages, continue
                         }
                         Err(std::sync::mpsc::TryRecvError::Disconnected) => {
-                            warn!("Container watcher channel disconnected");
                             break;
                         }
                     }
@@ -437,12 +441,15 @@ async fn main() -> anyhow::Result<()> {
     println!("################################################################################");
     println!("###                          FINAL SUMMARY                                  ###");
     println!("################################################################################");
-    let final_cgid = *current_cgid.lock().unwrap();
-    if let Err(e) = export_events_to_json(&export_map, "final-events.json", final_cgid) {
-        eprintln!("Failed to export final events to JSON: {}", e);
+    if args.enforce.is_none() {
+        let final_cgid = *current_cgid.lock().unwrap();
+        if let Err(e) = export_events_to_json(&export_map, "final-events.json", final_cgid) {
+            eprintln!("Failed to export final events to JSON: {}", e);
+        }
+        println!("### JSON events exported to final-events.json and text summary saved     ###");
+    } else {
+        println!("### Enforcement mode — profile not overwritten                           ###");
     }
-    println!("################################################################################");
-    println!("### JSON events exported to final-events.json and text summary saved     ###");
     println!("################################################################################");
 
     Ok(())
@@ -552,7 +559,7 @@ async fn read_audit_cpu(mut buf: aya::maps::perf::AsyncPerfEventArrayBuffer<aya:
                     let data = &buffers[i];
                     if data.len() >= 20 {
                         let cgroup_id = u64::from_ne_bytes(data[0..8].try_into().unwrap_or([0; 8]));
-                        let inode = u64::from_ne_bytes(data[8..16].try_into().unwrap_or([0; 8]));
+                        let path_hash = u64::from_ne_bytes(data[8..16].try_into().unwrap_or([0; 8]));
                         let pattern = data[16];
                         let action = data[17];
                         let verdict = data[18];
@@ -569,8 +576,8 @@ async fn read_audit_cpu(mut buf: aya::maps::perf::AsyncPerfEventArrayBuffer<aya:
                             _ => "unknown",
                         };
                         warn!(
-                            "ENFORCEMENT {}: {} action={} inode={} pattern={} cgroup={}",
-                            verdict_str, action_str, action, inode, pattern, cgroup_id
+                            "ENFORCEMENT {}: {} path_hash={:#x} pattern={} cgroup={}",
+                            verdict_str, action_str, path_hash, pattern, cgroup_id
                         );
                     }
                 }

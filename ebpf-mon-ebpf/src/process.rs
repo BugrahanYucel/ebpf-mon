@@ -241,9 +241,13 @@ pub unsafe fn handle_exit_exec_common(
     let retval: i64 = ctx.read_at(16).unwrap_or(-1);
     pending_exec.payload.retval = retval as i32;
 
-    // After successful exec, exe_file points to the NEW binary
+    // After successful exec, exe_file points to the NEW binary.
+    // Re-resolve both path and inode so the profile records the
+    // target binary (e.g. /bin/busybox) instead of the caller (e.g. /runc).
     if retval == 0 {
         if let Some(exe_file) = core_read_kernel!(ts, mm, exe_file) {
+            pending_exec.payload.path.reset();
+            let _ = pending_exec.payload.path.core_resolve_file(&exe_file, MAX_PATH_DEPTH);
             if let Some(inode_ptr) = exe_file.f_inode() {
                 if let Some(ino) = inode_ptr.i_ino() {
                     pending_exec.payload.inode = ino;

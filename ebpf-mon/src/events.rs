@@ -114,9 +114,9 @@ pub struct FsEvent {
 
 impl PartialEq for FsEvent {
     fn eq(&self, other: &Self) -> bool {
-        self.inode == other.inode
+        self.path == other.path
+            && self.inode == other.inode
             && self.r_w == other.r_w
-            && self.owner_uid == other.owner_uid
     }
 }
 
@@ -124,9 +124,9 @@ impl Eq for FsEvent {}
 
 impl Hash for FsEvent {
     fn hash<H: Hasher>(&self, state: &mut H) {
+        self.path.hash(state);
         self.inode.hash(state);
         self.r_w.hash(state);
-        self.owner_uid.hash(state);
     }
 }
 

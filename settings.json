@@ -1,0 +1,9 @@
+{
+    "rust-analyzer.showUnlinkedFileNotification": false,
+    "rust-analyzer.linkedProjects": ["Cargo.toml", "ebpf-mon-ebpf/Cargo.toml"],
+    "rust-analyzer.cargo.cfgs": [
+      "debug_assertions",
+      "target_arch=bpf",
+      "target_arch=x86_64",
+    ],
+  }

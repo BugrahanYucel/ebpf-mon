@@ -1,0 +1,1262 @@
+{
+  "cgroup": "unknown",
+  "network": [
+    {
+      "dst_ip": "1.1.1.1",
+      "dst_port": 443,
+      "direction": "outgoing",
+      "freq": 10
+    },
+    {
+      "dst_ip": "1.1.1.1",
+      "dst_port": 53,
+      "direction": "outgoing",
+      "freq": 3
+    },
+    {
+      "dst_ip": "142.250.185.46",
+      "dst_port": 443,
+      "direction": "outgoing",
+      "freq": 2
+    },
+    {
+      "dst_ip": "8.8.8.8",
+      "dst_port": 443,
+      "direction": "outgoing",
+      "freq": 2
+    },
+    {
+      "dst_ip": "8.8.8.8",
+      "dst_port": 8080,
+      "direction": "outgoing",
+      "freq": 1
+    },
+    {
+      "dst_ip": "8.8.8.8",
+      "dst_port": 80,
+      "direction": "outgoing",
+      "freq": 1
+    },
+    {
+      "dst_ip": "93.184.216.34",
+      "dst_port": 443,
+      "direction": "outgoing",
+      "freq": 1
+    }
+  ],
+  "fs": [
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/functools.cpython-39.pyc.138978815203232",
+      "inode": 2403331,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/operator.cpython-39.pyc.138978815204240",
+      "inode": 2403337,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/site.cpython-39.pyc.138978815942080",
+      "inode": 2403309,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/re.cpython-39.pyc.138978815679600",
+      "inode": 2403325,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "",
+      "inode": 62642520,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/_posixsubprocess.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401674,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/json/decoder.py",
+      "inode": 2401635,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/collections/__init__.py",
+      "inode": 2401201,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/operator.py",
+      "inode": 2401844,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "inode": 2369698,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/signal.py",
+      "inode": 2401882,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libbz2.so.1.0.4",
+      "inode": 2369697,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "",
+      "inode": 62642511,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "",
+      "inode": 62642517,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/grp.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401701,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/re.py",
+      "inode": 2401872,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/proc/7/status",
+      "inode": 62642502,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/json/scanner.py",
+      "inode": 2401637,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/lib/locale/C.utf8/LC_MESSAGES",
+      "inode": 2369383,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/_sitebuiltins.cpython-39.pyc.138978815595824",
+      "inode": 2403315,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/sre_compile.cpython-39.pyc.138978815385248",
+      "inode": 2403328,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/_bz2.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401644,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/_weakrefset.cpython-39.pyc.138978813899024",
+      "inode": 2403348,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/reprlib.py",
+      "inode": 2401873,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/subprocess.py",
+      "inode": 2403050,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lzma.py",
+      "inode": 2401806,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/_collections_abc.py",
+      "inode": 2401134,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/_weakrefset.py",
+      "inode": 2401146,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/lzma.cpython-39.pyc.138978814191968",
+      "inode": 2403372,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/proc/filesystems",
+      "inode": 4026532075,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/sre_constants.py",
+      "inode": 2403042,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/socket.cpython-39.pyc.138978815381664",
+      "inode": 2403342,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/ntpath.cpython-39.pyc.138978814029584",
+      "inode": 2403353,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/proc/7/cgroup",
+      "inode": 62642488,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/_bootlocale.py",
+      "inode": 2401132,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/contextlib.py",
+      "inode": 2401226,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/abc.cpython-39.pyc.138978815940176",
+      "inode": 2403308,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "inode": 2369724,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/file_0.txt",
+      "inode": 2403366,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/contextlib.cpython-39.pyc.138978814581872",
+      "inode": 2403350,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/sre_parse.cpython-39.pyc.138978814912640",
+      "inode": 2403329,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/_heapq.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401664,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/socket.py",
+      "inode": 2403034,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/test_rw.txt",
+      "inode": 2403365,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/warnings.py",
+      "inode": 2403148,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/shutil.cpython-39.pyc.138978812454144",
+      "inode": 2403369,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/encodings/__pycache__/utf_8.cpython-39.pyc.138978816012592",
+      "inode": 2403305,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "",
+      "inode": 62642503,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/ipaddress.py",
+      "inode": 2401631,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libz.so.1.3.1",
+      "inode": 2369779,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/_compression.py",
+      "inode": 2401136,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/json/__pycache__/__init__.cpython-39.pyc.138978815598000",
+      "inode": 2403323,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/site-packages/_distutils_hack/__init__.py",
+      "inode": 2401886,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/reprlib.cpython-39.pyc.138978814779264",
+      "inode": 2403338,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libcap.so.2.75",
+      "inode": 2369703,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/warnings.cpython-39.pyc.138978814580864",
+      "inode": 2403349,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/encodings/latin_1.py",
+      "inode": 2401446,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libselinux.so.1",
+      "inode": 2369754,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/abc.py",
+      "inode": 2401147,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/bz2.cpython-39.pyc.138978814530704",
+      "inode": 2403370,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/array.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401696,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/os.py",
+      "inode": 2401846,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/enum.cpython-39.pyc.138978815679936",
+      "inode": 2403326,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/threading.py",
+      "inode": 2403061,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "",
+      "inode": 2403362,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/functools.py",
+      "inode": 2401499,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/_lzma.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401667,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/test_write.txt",
+      "inode": 2403364,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/encodings/__pycache__/latin_1.cpython-39.pyc.138978816012848",
+      "inode": 2403306,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/signal.cpython-39.pyc.138978813899360",
+      "inode": 2403346,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/share/zoneinfo/Etc/UTC",
+      "inode": 2373754,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/workload/ground_truth.json",
+      "inode": 5812416,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/_sitebuiltins.py",
+      "inode": 2401142,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/site-packages/distutils-precedence.pth",
+      "inode": 2401889,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/sre_parse.py",
+      "inode": 2403043,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/_collections_abc.cpython-39.pyc.138978815624880",
+      "inode": 2403312,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/encodings/__init__.py",
+      "inode": 2401359,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/collections/abc.py",
+      "inode": 2401203,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/encodings/__pycache__/__init__.cpython-39.pyc.138978816146096",
+      "inode": 2403301,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/collections/__pycache__/abc.cpython-39.pyc.138978814642096",
+      "inode": 2403344,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/select.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401709,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/file_1.txt",
+      "inode": 2403367,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/posixpath.cpython-39.pyc.138978815663888",
+      "inode": 2403313,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/lib/locale/C.utf8/LC_MESSAGES",
+      "inode": 2369383,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/keyword.py",
+      "inode": 2401639,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/proc/7/task/7/attr/apparmor/exec",
+      "inode": 62642478,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/threading.cpython-39.pyc.138978813898912",
+      "inode": 2403347,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/zlib.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401715,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/liblzma.so.5.8.1",
+      "inode": 2369723,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/file_1.txt",
+      "inode": 2403367,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/os.cpython-39.pyc.138978816069904",
+      "inode": 2403310,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/heapq.py",
+      "inode": 2401508,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/site-packages/_distutils_hack/__pycache__/__init__.cpython-39.pyc.138978815375376",
+      "inode": 2403320,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/json/encoder.py",
+      "inode": 2401636,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/etc/resolv.conf",
+      "inode": 2403288,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/stat.py",
+      "inode": 2403045,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/struct.py",
+      "inode": 2403049,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/pathlib.py",
+      "inode": 2401847,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/_struct.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401685,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/math.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401702,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/stat.cpython-39.pyc.138978815680272",
+      "inode": 2403311,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/json/__pycache__/encoder.cpython-39.pyc.138978814409008",
+      "inode": 2403341,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/fnmatch.cpython-39.pyc.138978814581872",
+      "inode": 2403352,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/io.cpython-39.pyc.138978815941184",
+      "inode": 2403307,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/copyreg.py",
+      "inode": 2401229,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/pathlib.cpython-39.pyc.138978813901824",
+      "inode": 2403351,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libpcre2-8.so.0.14.0",
+      "inode": 2369746,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/file_0.txt",
+      "inode": 2403366,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/subprocess.cpython-39.pyc.138978814910960",
+      "inode": 2403345,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/etc/group",
+      "inode": 2376434,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/_socket.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401681,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/sre_compile.py",
+      "inode": 2403041,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/urllib/__init__.py",
+      "inode": 2403128,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "",
+      "inode": 62642523,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/encodings/utf_8.py",
+      "inode": 2401478,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/collections/__pycache__/__init__.cpython-39.pyc.138978814407088",
+      "inode": 2403334,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/file_2.txt",
+      "inode": 2403368,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/genericpath.py",
+      "inode": 2401500,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/ntpath.py",
+      "inode": 2401840,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/workload/test_workload.py",
+      "inode": 5809358,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/heapq.cpython-39.pyc.138978815204016",
+      "inode": 2403335,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/urllib/parse.py",
+      "inode": 2403131,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/etc/passwd",
+      "inode": 2369011,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/fnmatch.py",
+      "inode": 2401495,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/test_read.txt",
+      "inode": 2403363,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "diff",
+      "inode": 2403271,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/copyreg.cpython-39.pyc.138978815203008",
+      "inode": 2403339,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/struct.cpython-39.pyc.138978812456048",
+      "inode": 2403360,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/urllib/__pycache__/parse.cpython-39.pyc.138978813224368",
+      "inode": 2403357,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/file_2.txt",
+      "inode": 2403368,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/encodings/aliases.py",
+      "inode": 2401361,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/encodings/__pycache__/aliases.cpython-39.pyc.138978816012976",
+      "inode": 2403304,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/enum.py",
+      "inode": 2401492,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/site.py",
+      "inode": 2403030,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/types.py",
+      "inode": 2403110,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/proc/filesystems",
+      "inode": 4026532075,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/types.cpython-39.pyc.138978815385472",
+      "inode": 2403327,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/typing.py",
+      "inode": 2403111,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/sre_constants.cpython-39.pyc.138978815168688",
+      "inode": 2403330,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/json/__pycache__/decoder.cpython-39.pyc.138978815598128",
+      "inode": 2403324,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/keyword.cpython-39.pyc.138978815204016",
+      "inode": 2403336,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/codecs.py",
+      "inode": 2401198,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/io.py",
+      "inode": 2401630,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/_bootlocale.cpython-39.pyc.138978815660080",
+      "inode": 2403316,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/json/__pycache__/scanner.cpython-39.pyc.138978814743856",
+      "inode": 2403340,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/selectors.cpython-39.pyc.138978814911072",
+      "inode": 2403343,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/typing.cpython-39.pyc.138978813022080",
+      "inode": 2403359,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/selectors.py",
+      "inode": 2401878,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/etc/hosts",
+      "inode": 2403287,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/bz2.py",
+      "inode": 2401190,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "",
+      "inode": 62642506,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/lib-dynload/_json.cpython-39-x86_64-linux-gnu.so",
+      "inode": 2401665,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/codecs.cpython-39.pyc.138978815939728",
+      "inode": 2403303,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/ipaddress.cpython-39.pyc.138978814423760",
+      "inode": 2403358,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/json/__init__.py",
+      "inode": 2401633,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/posixpath.py",
+      "inode": 2401856,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/test_read.txt",
+      "inode": 2403363,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/proc/7/setgroups",
+      "inode": 62641828,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/urllib/__pycache__/__init__.cpython-39.pyc.138978813223984",
+      "inode": 2403356,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/_compression.cpython-39.pyc.138978812870704",
+      "inode": 2403371,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/__pycache__/genericpath.cpython-39.pyc.138978815663664",
+      "inode": 2403314,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/python3.9/shutil.py",
+      "inode": 2401881,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/usr/local/lib/libpython3.9.so.1.0",
+      "inode": 2401119,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    },
+    {
+      "path": "/tmp/ebpf_test/test_rw.txt",
+      "inode": 2403365,
+      "owner_uid": 0,
+      "r_w": "write",
+      "freq": 1
+    },
+    {
+      "path": "",
+      "inode": 62642513,
+      "owner_uid": 0,
+      "r_w": "read",
+      "freq": 1
+    }
+  ],
+  "process": [
+    {
+      "exec_path": "/usr/local/bin/python3.9",
+      "inode": 2400953,
+      "ps_type": "execve",
+      "pid": 3835572,
+      "cgroup": 736799,
+      "freq": 1
+    },
+    {
+      "exec_path": "/usr/bin/pwd",
+      "inode": 2369241,
+      "ps_type": "execve",
+      "pid": 3835584,
+      "cgroup": 736799,
+      "freq": 1
+    },
+    {
+      "exec_path": "/usr/local/bin/python3.9",
+      "inode": 2400953,
+      "ps_type": "fork",
+      "pid": 3835572,
+      "cgroup": 736799,
+      "freq": 1
+    },
+    {
+      "exec_path": "/usr/bin/ls",
+      "inode": 2369197,
+      "ps_type": "execve",
+      "pid": 3835582,
+      "cgroup": 736799,
+      "freq": 1
+    },
+    {
+      "exec_path": "/usr/bin/cat",
+      "inode": 2369097,
+      "ps_type": "execve",
+      "pid": 3835583,
+      "cgroup": 736799,
+      "freq": 1
+    },
+    {
+      "exec_path": "/usr/bin/echo",
+      "inode": 2369146,
+      "ps_type": "execve",
+      "pid": 3835579,
+      "cgroup": 736799,
+      "freq": 1
+    },
+    {
+      "exec_path": "/usr/bin/dash",
+      "inode": 2369115,
+      "ps_type": "execve",
+      "pid": 3835585,
+      "cgroup": 736799,
+      "freq": 1
+    }
+  ]
+}

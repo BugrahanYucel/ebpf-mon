@@ -197,6 +197,15 @@ impl Path {
     }
 
     #[inline(always)]
+    pub fn reset(&mut self) {
+        self.len = 0;
+        self.depth = 0;
+        self.real = false;
+        self.metadata = None;
+        self.error = None;
+    }
+
+    #[inline(always)]
     pub fn get_byte(&self, i: usize) -> core::result::Result<u8, Error> {
         let i = match self.mode {
             Mode::Append => i,
@@ -372,5 +381,30 @@ impl Path {
     #[inline(always)]
     pub fn as_full_buffer(&self) -> &[u8; MAX_PATH_LEN] {
         &self.buffer
+    }
+
+    /// FNV-1a hash of the path content. Produces identical output to
+    /// `fnv1a_hash_bytes(path_string.as_bytes())` in userspace.
+    /// Uses bounded indexing so the BPF verifier can track all accesses.
+    #[inline(always)]
+    pub fn hash_path(&self) -> u64 {
+        let (buf, start) = self.raw_buffer_and_offset();
+        let len = self.len();
+        let mut hash: u64 = 0xcbf29ce484222325u64;
+        let mut i: usize = 0;
+        while i < MAX_PATH_LEN {
+            if i >= len {
+                break;
+            }
+            let idx = (start + i) & (MAX_PATH_LEN - 1);
+            let byte = buf[idx];
+            if byte == 0 {
+                break;
+            }
+            hash ^= byte as u64;
+            hash = hash.wrapping_mul(0x100000001b3u64);
+            i += 1;
+        }
+        hash
     }
 }

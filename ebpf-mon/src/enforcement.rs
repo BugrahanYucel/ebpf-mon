@@ -1,14 +1,13 @@
-use std::os::unix::fs::MetadataExt;
-
 use aya::maps::HashMap;
 use aya::programs::Lsm;
 use aya::{Btf, Ebpf};
 use log::{info, warn};
 
 use ebpf_mon_common::policy::{
-    Action, BehaviorRule, BinaryRef, FilePattern, InodeKey,
-    NetPolicyKey, NetworkObject, Object, PatternKey,
+    Action, BehaviorRule, BinaryRef, FilePattern,
+    NetPolicyKey, NetworkObject, Object, PathPolicyKey, PatternKey,
     PolicyConfig, PrefixEntry, Verdict, PREFIX_MAX_LEN,
+    fnv1a_hash_bytes,
 };
 
 pub struct PolicyLoader {
@@ -43,10 +42,10 @@ impl PolicyLoader {
         stats.cgroups_configured += 1;
 
         // --- File enforcement maps ---
-        let inode_map = ebpf.take_map("FILE_INODE_POLICY")
-            .ok_or("FILE_INODE_POLICY map not found")?;
-        let mut file_inodes: HashMap<aya::maps::MapData, InodeKey, u8> =
-            HashMap::try_from(inode_map)?;
+        let path_map = ebpf.take_map("FILE_PATH_POLICY")
+            .ok_or("FILE_PATH_POLICY map not found")?;
+        let mut file_paths: HashMap<aya::maps::MapData, PathPolicyKey, u8> =
+            HashMap::try_from(path_map)?;
 
         let pattern_map = ebpf.take_map("FILE_PATTERN_POLICY")
             .ok_or("FILE_PATTERN_POLICY map not found")?;
@@ -60,15 +59,11 @@ impl PolicyLoader {
         let mut prefix_slot: u64 = 0;
 
         // --- Exec enforcement maps ---
-        let exec_inode_map = ebpf.take_map("EXEC_INODE_POLICY")
-            .ok_or("EXEC_INODE_POLICY map not found")?;
-        let mut exec_inodes: HashMap<aya::maps::MapData, InodeKey, u8> =
-            HashMap::try_from(exec_inode_map)?;
+        let exec_path_map = ebpf.take_map("EXEC_PATH_POLICY")
+            .ok_or("EXEC_PATH_POLICY map not found")?;
+        let mut exec_paths: HashMap<aya::maps::MapData, PathPolicyKey, u8> =
+            HashMap::try_from(exec_path_map)?;
 
-        // EXEC_PATTERN_POLICY: take ownership to keep the map alive.
-        // Pattern-based exec enforcement requires a userspace classify_path
-        // implementation to map binary paths to PathPattern variants at load
-        // time. Currently exec enforcement relies on inode lookup (Tier 1).
         let exec_pattern_map = ebpf.take_map("EXEC_PATTERN_POLICY")
             .ok_or("EXEC_PATTERN_POLICY map not found")?;
         let _exec_patterns: HashMap<aya::maps::MapData, PatternKey, u8> =
@@ -88,22 +83,10 @@ impl PolicyLoader {
                 (Object::File(file_obj), Action::FileOpen | Action::FileRead | Action::FileWrite) => {
                     match &file_obj.pattern {
                         FilePattern::ExactPath(path) => {
-                            let inode_result = if let Some(inode) = file_obj.profiled_inode {
-                                Ok(inode)
-                            } else {
-                                resolve_inode(path)
-                            };
-                            match inode_result {
-                                Ok(inode) => {
-                                    let key = InodeKey { cgroup_id, inode };
-                                    file_inodes.insert(key, verdict_val, 0)?;
-                                    stats.inode_rules += 1;
-                                }
-                                Err(e) => {
-                                    warn!("Failed to resolve inode for '{}': {}", path, e);
-                                    stats.resolution_failures += 1;
-                                }
-                            }
+                            let path_hash = fnv1a_hash_bytes(path.as_bytes());
+                            let key = PathPolicyKey { cgroup_id, path_hash };
+                            file_paths.insert(key, verdict_val, 0)?;
+                            stats.path_rules += 1;
                         }
                         FilePattern::Classified(pattern) => {
                             // Normalize action to FileOpen (0) because
@@ -148,22 +131,10 @@ impl PolicyLoader {
                 (Object::Process(proc_obj), Action::ProcExec) => {
                     match &proc_obj.binary {
                         BinaryRef::Path(path) => {
-                            let inode_result = if let Some(inode) = proc_obj.profiled_inode {
-                                Ok(inode)
-                            } else {
-                                resolve_inode(path)
-                            };
-                            match inode_result {
-                                Ok(inode) => {
-                                    let key = InodeKey { cgroup_id, inode };
-                                    exec_inodes.insert(key, verdict_val, 0)?;
-                                    stats.exec_inode_rules += 1;
-                                }
-                                Err(e) => {
-                                    warn!("Failed to resolve exec inode for '{}': {}", path, e);
-                                    stats.resolution_failures += 1;
-                                }
-                            }
+                            let path_hash = fnv1a_hash_bytes(path.as_bytes());
+                            let key = PathPolicyKey { cgroup_id, path_hash };
+                            exec_paths.insert(key, verdict_val, 0)?;
+                            stats.exec_path_rules += 1;
                         }
                         BinaryRef::Comm(_) => {
                             stats.skipped_non_file += 1;
@@ -194,17 +165,62 @@ impl PolicyLoader {
             }
         }
 
+        // Expand pattern categories: if ANY variant in a virtual-fs
+        // category was observed, whitelist ALL siblings. This handles
+        // files opened by the container runtime (runc) that may not
+        // have been exercised during profiling.
+        use ebpf_mon_common::fs::PathPattern;
+        let category_groups: &[&[u8]] = &[
+            // /proc global: /proc/filesystems, /proc/sys/**, /proc/net/*
+            &[PathPattern::ProcGlobal as u8, PathPattern::ProcGlobalSys as u8, PathPattern::ProcGlobalNet as u8],
+            // /proc/PID (non-sensitive only)
+            &[
+                PathPattern::ProcPidCmdline as u8, PathPattern::ProcPidComm as u8,
+                PathPattern::ProcPidCwd as u8, PathPattern::ProcPidExe as u8,
+                PathPattern::ProcPidFd as u8, PathPattern::ProcPidMountinfo as u8,
+                PathPattern::ProcPidMounts as u8, PathPattern::ProcPidNet as u8,
+                PathPattern::ProcPidNs as u8, PathPattern::ProcPidStat as u8,
+                PathPattern::ProcPidStatus as u8, PathPattern::ProcPidTask as u8,
+                PathPattern::ProcPidCgroup as u8, PathPattern::ProcPidOther as u8,
+                PathPattern::ProcSelf as u8,
+            ],
+            // /sys/**
+            &[PathPattern::SysCgroupDocker as u8, PathPattern::SysCgroupOther as u8,
+              PathPattern::SysClassNet as u8, PathPattern::SysOther as u8],
+            // /run/**
+            &[PathPattern::RunDocker as u8, PathPattern::RunUser as u8, PathPattern::RunOther as u8],
+            // /dev/*
+            &[PathPattern::DevPts as u8, PathPattern::DevShm as u8, PathPattern::DevOther as u8],
+            // /tmp/**
+            &[PathPattern::TmpRandom as u8, PathPattern::TmpOther as u8],
+        ];
+
+        for group in category_groups {
+            let any_present = group.iter().any(|&pat| {
+                let key = PatternKey { cgroup_id, pattern: pat, action: 0, _pad: [0u8; 6] };
+                file_patterns.get(&key, 0).is_ok()
+            });
+            if any_present {
+                for &pat in *group {
+                    let key = PatternKey { cgroup_id, pattern: pat, action: 0, _pad: [0u8; 6] };
+                    if file_patterns.get(&key, 0).is_err() {
+                        file_patterns.insert(key, 1, 0)?; // allow
+                        stats.pattern_rules += 1;
+                    }
+                }
+            }
+        }
+
         info!(
-            "Policy loaded: {} file-inode, {} file-pattern, {} file-prefix, \
-             {} exec-inode, {} net rules, {} cgroups ({} skipped, {} failures)",
-            stats.inode_rules,
+            "Policy loaded: {} file-path, {} file-pattern, {} file-prefix, \
+             {} exec-path, {} net rules, {} cgroups ({} skipped)",
+            stats.path_rules,
             stats.pattern_rules,
             stats.prefix_rules,
-            stats.exec_inode_rules,
+            stats.exec_path_rules,
             stats.net_rules,
             stats.cgroups_configured,
             stats.skipped_prefix + stats.skipped_non_file,
-            stats.resolution_failures
         );
 
         Ok(stats)
@@ -251,20 +267,13 @@ impl PolicyLoader {
 #[derive(Debug, Default)]
 pub struct PolicyStats {
     pub cgroups_configured: usize,
-    pub inode_rules: usize,
+    pub path_rules: usize,
     pub pattern_rules: usize,
     pub prefix_rules: usize,
-    pub exec_inode_rules: usize,
-    pub exec_pattern_rules: usize,
+    pub exec_path_rules: usize,
     pub net_rules: usize,
     pub skipped_prefix: usize,
     pub skipped_non_file: usize,
-    pub resolution_failures: usize,
-}
-
-fn resolve_inode(path: &str) -> Result<u64, std::io::Error> {
-    let metadata = std::fs::metadata(path)?;
-    Ok(metadata.ino())
 }
 
 fn verdict_to_u8(v: &Verdict) -> u8 {

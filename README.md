@@ -1,4 +1,4 @@
-# eBPF Monitoring Tool - This is a Prototype Version, Work In Progress
+# eBPF Monitoring Tool
 
 eBPF-based security monitoring tool for tracking network, filesystem, and process events in containers and cgroups.
 
@@ -157,7 +157,7 @@ The tool monitors a specific cgroup (control group):
 
 ---
 
-## 🛠️ Requirements
+## Requirements
 
 - Linux kernel >= 5.4 (with eBPF support)
 - Rust toolchain
@@ -178,7 +178,7 @@ sudo apt install docker.io
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ebpf-mon/
@@ -277,6 +277,6 @@ kill $EBPF_PID
 
 ---
 
-## 📄 License
+## License
 
 See LICENSE files for details.

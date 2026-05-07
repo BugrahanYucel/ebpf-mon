@@ -9,14 +9,14 @@ use ebpf_mon_common::{
     co_re::{self, core_read_kernel, r#gen, task_struct},
     fs::{PathPattern, classify_path},
     path::MAX_PATH_DEPTH,
-    policy::{InodeKey, NetPolicyKey, PatternKey, PolicyConfig, PrefixEntry},
+    policy::{InodeKey, NetPolicyKey, PathPolicyKey, PatternKey, PolicyConfig, PrefixEntry},
 };
 
 #[map]
 static POLICY_CGROUPS: HashMap<u64, PolicyConfig> = HashMap::with_max_entries(64, 0);
 
 #[map]
-static FILE_INODE_POLICY: HashMap<InodeKey, u8> = HashMap::with_max_entries(65536, 0);
+static FILE_PATH_POLICY: HashMap<PathPolicyKey, u8> = HashMap::with_max_entries(65536, 0);
 
 #[map]
 static FILE_PATTERN_POLICY: HashMap<PatternKey, u8> = HashMap::with_max_entries(4096, 0);
@@ -28,7 +28,7 @@ static AUDIT_EVENTS: aya_ebpf::maps::PerfEventByteArray = aya_ebpf::maps::PerfEv
 #[derive(Clone, Copy)]
 pub struct AuditEvent {
     pub cgroup_id: u64,
-    pub inode: u64,
+    pub path_hash: u64,
     pub pattern: u8,
     pub action: u8,
     pub verdict: u8,
@@ -60,27 +60,8 @@ pub fn enforce_file_open(ctx: *mut ::core::ffi::c_void) -> i32 {
     };
 
     let file = unsafe { co_re::file::from_ptr(ctx.arg::<*const gen::file>(0)) };
-    let inode_ptr = match unsafe { file.f_inode() } {
-        Some(p) => p,
-        None => return 0,
-    };
-    let inode_num = match unsafe { inode_ptr.i_ino() } {
-        Some(n) => n,
-        None => return 0,
-    };
 
-    // Tier 1: Inode lookup
-    let inode_key = InodeKey { cgroup_id: cgid, inode: inode_num };
-    if let Some(verdict) = unsafe { FILE_INODE_POLICY.get(&inode_key) } {
-        let v = *verdict;
-        if config.audit_only != 0 && v == 0 {
-            emit_audit(&ctx, cgid, inode_num, PathPattern::Regular as u8, 0, v);
-            return 0;
-        }
-        return verdict_to_rc(v);
-    }
-
-    // Tier 2: Path classification
+    // Resolve path from dentry chain — single source of truth
     if alloc::init().is_err() {
         return 0;
     }
@@ -89,6 +70,21 @@ pub fn enforce_file_open(ctx: *mut ::core::ffi::c_void) -> i32 {
         Err(_) => return 0,
     };
     let _ = unsafe { path_buf.core_resolve_file(&file, MAX_PATH_DEPTH) };
+
+    let path_hash = path_buf.hash_path();
+
+    // Tier 1: Exact path match via hash
+    let path_key = PathPolicyKey { cgroup_id: cgid, path_hash };
+    if let Some(verdict) = unsafe { FILE_PATH_POLICY.get(&path_key) } {
+        let v = *verdict;
+        if config.audit_only != 0 && v == 0 {
+            emit_audit(&ctx, cgid, path_hash, PathPattern::Regular as u8, 0, v, Some(path_buf));
+            return 0;
+        }
+        return verdict_to_rc(v);
+    }
+
+    // Tier 2: Path classification (pattern-based)
     let classify_buf = path_buf.to_classify_buffer();
     let ns_tgid = unsafe { ts.ns_tgid() }.unwrap_or(0);
     let (pattern, _, _) = unsafe { classify_path(&classify_buf, ns_tgid) };
@@ -103,22 +99,22 @@ pub fn enforce_file_open(ctx: *mut ::core::ffi::c_void) -> i32 {
         if let Some(verdict) = unsafe { FILE_PATTERN_POLICY.get(&pattern_key) } {
             let v = *verdict;
             if config.audit_only != 0 && v == 0 {
-                emit_audit(&ctx, cgid, inode_num, pattern as u8, 0, v);
+                emit_audit(&ctx, cgid, path_hash, pattern as u8, 0, v, Some(path_buf));
                 return 0;
             }
             return verdict_to_rc(v);
         }
     }
 
-    // Tier 2.5: Prefix matching
-    if let Some(rc) = check_prefix_match(&ctx, &config, cgid, inode_num, path_buf) {
+    // Tier 3: Prefix matching
+    if let Some(rc) = check_prefix_match(&ctx, &config, cgid, path_hash, path_buf) {
         return rc;
     }
 
     // No rule matched — default deny
     if config.default_action == 0 {
+        emit_audit(&ctx, cgid, path_hash, 0xFF, 0, 0, Some(path_buf));
         if config.audit_only != 0 {
-            emit_audit(&ctx, cgid, inode_num, 0xFF, 0, 0);
             return 0;
         }
         return -1;
@@ -145,10 +141,10 @@ fn default_verdict(config: &PolicyConfig) -> i32 {
 }
 
 #[inline(always)]
-fn emit_audit(ctx: &LsmContext, cgroup_id: u64, inode: u64, pattern: u8, action: u8, verdict: u8) {
+fn emit_audit(ctx: &LsmContext, cgroup_id: u64, path_hash: u64, pattern: u8, action: u8, verdict: u8, _path_buf: Option<&ebpf_mon_common::path::Path>) {
     let event = AuditEvent {
         cgroup_id,
-        inode,
+        path_hash,
         pattern,
         action,
         verdict,
@@ -168,7 +164,7 @@ fn emit_audit(ctx: &LsmContext, cgroup_id: u64, inode: u64, pattern: u8, action:
 // ═══════════════════════════════════════════════════════════════════
 
 #[map]
-static EXEC_INODE_POLICY: HashMap<InodeKey, u8> = HashMap::with_max_entries(4096, 0);
+static EXEC_PATH_POLICY: HashMap<PathPolicyKey, u8> = HashMap::with_max_entries(4096, 0);
 
 #[map]
 static EXEC_PATTERN_POLICY: HashMap<PatternKey, u8> = HashMap::with_max_entries(1024, 0);
@@ -194,27 +190,8 @@ pub fn enforce_bprm_check(ctx: *mut ::core::ffi::c_void) -> i32 {
         Some(f) => f,
         None => return 0,
     };
-    let inode_ptr = match unsafe { file.f_inode() } {
-        Some(p) => p,
-        None => return 0,
-    };
-    let inode_num = match unsafe { inode_ptr.i_ino() } {
-        Some(n) => n,
-        None => return 0,
-    };
 
-    // Tier 1: Inode lookup
-    let inode_key = InodeKey { cgroup_id: cgid, inode: inode_num };
-    if let Some(verdict) = unsafe { EXEC_INODE_POLICY.get(&inode_key) } {
-        let v = *verdict;
-        if config.audit_only != 0 && v == 0 {
-            emit_audit(&ctx, cgid, inode_num, 0, 5, v);
-            return 0;
-        }
-        return verdict_to_rc(v);
-    }
-
-    // Tier 2: Path classification
+    // Resolve binary path from dentry chain
     if alloc::init().is_err() {
         return 0;
     }
@@ -223,6 +200,21 @@ pub fn enforce_bprm_check(ctx: *mut ::core::ffi::c_void) -> i32 {
         Err(_) => return 0,
     };
     let _ = unsafe { path_buf.core_resolve_file(&file, MAX_PATH_DEPTH) };
+
+    let path_hash = path_buf.hash_path();
+
+    // Tier 1: Exact path match via hash
+    let path_key = PathPolicyKey { cgroup_id: cgid, path_hash };
+    if let Some(verdict) = unsafe { EXEC_PATH_POLICY.get(&path_key) } {
+        let v = *verdict;
+        if config.audit_only != 0 && v == 0 {
+            emit_audit(&ctx, cgid, path_hash, 0, 5, v, Some(path_buf));
+            return 0;
+        }
+        return verdict_to_rc(v);
+    }
+
+    // Tier 2: Path classification
     let classify_buf = path_buf.to_classify_buffer();
     let ns_tgid = unsafe { ts.ns_tgid() }.unwrap_or(0);
     let (pattern, _, _) = unsafe { classify_path(&classify_buf, ns_tgid) };
@@ -237,7 +229,7 @@ pub fn enforce_bprm_check(ctx: *mut ::core::ffi::c_void) -> i32 {
         if let Some(verdict) = unsafe { EXEC_PATTERN_POLICY.get(&pattern_key) } {
             let v = *verdict;
             if config.audit_only != 0 && v == 0 {
-                emit_audit(&ctx, cgid, inode_num, pattern as u8, 5, v);
+                emit_audit(&ctx, cgid, path_hash, pattern as u8, 5, v, Some(path_buf));
                 return 0;
             }
             return verdict_to_rc(v);
@@ -246,8 +238,8 @@ pub fn enforce_bprm_check(ctx: *mut ::core::ffi::c_void) -> i32 {
 
     // No rule matched — default deny
     if config.default_action == 0 {
+        emit_audit(&ctx, cgid, path_hash, 0xFF, 5, 0, Some(path_buf));
         if config.audit_only != 0 {
-            emit_audit(&ctx, cgid, inode_num, 0xFF, 5, 0);
             return 0;
         }
         return -1;
@@ -304,10 +296,12 @@ pub fn enforce_socket_connect(ctx: LsmContext) -> i32 {
         protocol: 0,
         _pad: [0u8; 7],
     };
+    let net_id = ((dst_ip as u64) << 32) | (dst_port as u64);
+
     if let Some(verdict) = unsafe { NET_CONNECT_POLICY.get(&key) } {
         let v = *verdict;
         if config.audit_only != 0 && v == 0 {
-            emit_audit(&ctx, cgid, dst_ip as u64, 0, 3, v);
+            emit_audit(&ctx, cgid, net_id, 0, 3, v, None);
             return 0;
         }
         return verdict_to_rc(v);
@@ -323,7 +317,7 @@ pub fn enforce_socket_connect(ctx: LsmContext) -> i32 {
     if let Some(verdict) = unsafe { NET_CONNECT_POLICY.get(&wildcard_key) } {
         let v = *verdict;
         if config.audit_only != 0 && v == 0 {
-            emit_audit(&ctx, cgid, dst_ip as u64, 0, 3, v);
+            emit_audit(&ctx, cgid, net_id, 0, 3, v, None);
             return 0;
         }
         return verdict_to_rc(v);
@@ -331,8 +325,8 @@ pub fn enforce_socket_connect(ctx: LsmContext) -> i32 {
 
     // No rule matched — default deny
     if config.default_action == 0 {
+        emit_audit(&ctx, cgid, net_id, 0xFF, 3, 0, None);
         if config.audit_only != 0 {
-            emit_audit(&ctx, cgid, dst_ip as u64, 0xFF, 3, 0);
             return 0;
         }
         return -1;
@@ -354,7 +348,7 @@ fn check_prefix_match(
     ctx: &LsmContext,
     config: &PolicyConfig,
     cgid: u64,
-    inode: u64,
+    path_hash: u64,
     path_buf: &ebpf_mon_common::path::Path,
 ) -> Option<i32> {
     let path_len = path_buf.len();
@@ -391,7 +385,7 @@ fn check_prefix_match(
                 if matched {
                     let v = entry.verdict;
                     if config.audit_only != 0 && v == 0 {
-                        emit_audit(ctx, cgid, inode, 0xFF, 0, v);
+                        emit_audit(ctx, cgid, path_hash, 0xFF, 0, v, Some(path_buf));
                         return Some(0);
                     }
                     return Some(verdict_to_rc(v));

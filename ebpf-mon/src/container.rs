@@ -433,11 +433,11 @@ impl ContainerWatcher {
                 Err(e) => {
                     if e.kind() == io::ErrorKind::NotFound {
                         if was_running {
-                            warn!("Container '{}' was removed", self.container_name);
-                            was_running = false;
+                            warn!("Container '{}' was removed, stopping watcher", self.container_name);
                             let _ = self.tx.send(ContainerStateChange::Error(
                                 format!("Container '{}' was removed", self.container_name),
                             ));
+                            break;
                         }
                         poll_interval = Duration::from_secs(5);
                     } else {
