@@ -1,0 +1,13 @@
+# Processes workload: Poisson-modelled fork + exec of the tiny `stub` binary.
+# Drives ebpf-mon's process (exec/fork) monitoring hard.
+#
+# NOTE: random_process execs the same `stub` binary each time, so after
+# dedup this collapses to a single exec rule -- great for exec *volume*
+# (overhead benchmarking), not for rule *diversity*.
+restart_interval = 10
+
+[workload]
+type = "processes"
+arrival_rate = 50.0       # spawns/sec (exponential)
+departure_rate = 200.0    # exits/sec
+random_process = true     # fork + exec stub (false = fork only)

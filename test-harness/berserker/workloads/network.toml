@@ -1,0 +1,18 @@
+# Network workload -- PRIVILEGED. Crafts outbound client connections through a
+# userspace TUN device, so the container needs NET_ADMIN + /dev/net/tun.
+# Drives ebpf-mon's security_socket_connect path.
+#
+# Run via:  ./run.sh network        (adds the caps/device automatically)
+#      or:  docker compose --profile privileged up berserker-network
+restart_interval = 10
+
+[workload]
+type = "network"
+server = false
+address = "192.168.0.1"
+target_port = 8080
+arrival_rate = 0.1
+departure_rate = 0.1
+connections_static = 10
+connections_dyn_max = 100
+preempt = true

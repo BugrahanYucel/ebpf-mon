@@ -1,0 +1,9 @@
+# Endpoints workload: open many listening ports, Zipf-distributed (a few
+# processes hold most ports). Drives network *listen* activity.
+restart_interval = 10
+
+[workload]
+type = "endpoints"
+distribution = "zipf"     # or "uniform"
+n_ports = 200
+exponent = 1.4

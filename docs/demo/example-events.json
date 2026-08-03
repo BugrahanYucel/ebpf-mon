@@ -1,0 +1,35 @@
+{
+  "fs": [
+    {"path":"/etc/myapp/config.yaml","r_w":"read","is_sensitive":0,"freq":9,"inode":1001,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/etc/myapp/database.yaml","r_w":"read","is_sensitive":1,"freq":3,"inode":1002,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+
+    {"path":"/var/lib/myapp/pg_wal/000000010000000000000001","r_w":"write","is_sensitive":0,"freq":1,"inode":2001,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/lib/myapp/pg_wal/000000010000000000000002","r_w":"write","is_sensitive":0,"freq":1,"inode":2002,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/lib/myapp/pg_wal/000000010000000000000003","r_w":"write","is_sensitive":0,"freq":1,"inode":2003,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/lib/myapp/pg_wal/000000010000000000000004","r_w":"write","is_sensitive":0,"freq":1,"inode":2004,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/lib/myapp/pg_wal/000000010000000000000005","r_w":"write","is_sensitive":0,"freq":1,"inode":2005,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/lib/myapp/pg_wal/000000010000000000000006","r_w":"write","is_sensitive":0,"freq":1,"inode":2006,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/lib/myapp/pg_wal/000000010000000000000007","r_w":"write","is_sensitive":0,"freq":1,"inode":2007,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/lib/myapp/pg_wal/000000010000000000000008","r_w":"write","is_sensitive":0,"freq":1,"inode":2008,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+
+    {"path":"/var/log/myapp/app-2026-07-01.log","r_w":"write","is_sensitive":0,"freq":2,"inode":3001,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/log/myapp/app-2026-07-02.log","r_w":"write","is_sensitive":0,"freq":2,"inode":3002,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/log/myapp/app-2026-07-03.log","r_w":"write","is_sensitive":0,"freq":2,"inode":3003,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/log/myapp/app-2026-07-04.log","r_w":"write","is_sensitive":0,"freq":2,"inode":3004,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/log/myapp/app-2026-07-05.log","r_w":"write","is_sensitive":0,"freq":2,"inode":3005,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/log/myapp/app-2026-07-06.log","r_w":"write","is_sensitive":0,"freq":2,"inode":3006,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/var/log/myapp/archive/2026-06.log","r_w":"write","is_sensitive":0,"freq":1,"inode":3100,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+
+    {"path":"/proc/101/status","r_w":"read","is_sensitive":0,"freq":4,"inode":4001,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/proc/202/status","r_w":"read","is_sensitive":0,"freq":4,"inode":4002,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"path":"/proc/303/status","r_w":"read","is_sensitive":0,"freq":4,"inode":4003,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}}
+  ],
+  "process": [
+    {"exec_path":"/usr/local/bin/myapp","ps_type":"execve","cgroup_id":111,"inode":5001,"process_ctx":{"uid":0}},
+    {"exec_path":"/usr/bin/python3","ps_type":"execve","cgroup_id":111,"inode":5002,"process_ctx":{"uid":0}}
+  ],
+  "network": [
+    {"dst_ip":"93.184.216.34","dst_port":443,"protocol":"TCP","direction":"outgoing","freq":12,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}},
+    {"dst_ip":"10.0.0.5","dst_port":5432,"protocol":"TCP","direction":"outgoing","freq":30,"process_ctx":{"executable":"/usr/local/bin/myapp","uid":0,"cgroup_id":111}}
+  ]
+}

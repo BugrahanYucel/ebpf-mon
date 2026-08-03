@@ -1,0 +1,15 @@
+# Syscalls workload: repeatedly invoke open(2) on a fixed path.
+# Drives ebpf-mon's filesystem (vfs open) monitoring.
+#
+# syscall_nr 2 = open on x86_64 (use 257 for openat). Single path, so this is
+# file-open *volume*, not path diversity.
+restart_interval = 10
+per_core = false
+workers = 2
+
+[workload]
+type = "syscalls"
+tight_loop = false
+arrival_rate = 100.0
+syscall_nr = 2
+syscall_args = "pathname=/etc/hostname,flags=0,mode=0"

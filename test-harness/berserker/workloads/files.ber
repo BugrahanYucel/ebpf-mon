@@ -1,0 +1,33 @@
+// Experimental script workload (berserker .ber DSL).
+// Generates a directory of files + repeated opens + exec, all at once.
+//
+//   Run via:  SCRIPT=/workloads/files.ber docker run ... ebpf-mon/berserker
+//        or:  ./run.sh --script files.ber
+//
+// NOTE: random_path() produces random (non-hex, non-affixed) names, so this
+// exercises file-open *volume* and a populated directory -- it does NOT
+// reliably trip ebpf-mon's prefix-generalization guard (which wants
+// machine-generated names). For a passes-focused workload, use the dedicated
+// showcase generator instead.
+
+machine {
+  path("/data/berserker");
+}
+
+files (workers = 4, duration = 30) {
+  open(random_path("/data/berserker"));
+} : exp {
+  rate = 50.0;
+}
+
+hot (workers = 1, duration = 30) {
+  open("/data/berserker/hot");
+} : exp {
+  rate = 20.0;
+}
+
+procs (workers = 2, duration = 30) {
+  task(stub);
+} : exp {
+  rate = 5.0;
+}

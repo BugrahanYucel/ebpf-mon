@@ -1,0 +1,365 @@
+[
+  {
+    "id": 22,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": {
+        "Path": "/usr/local/bin/myapp"
+      },
+      "uid": 0
+    },
+    "object": {
+      "Network": {
+        "dst_ip": 83886090,
+        "dst_port": 5432,
+        "protocol": 6,
+        "direction": 1
+      }
+    },
+    "action": "NetConnect",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Net",
+      "observation_count": 30,
+      "confidence": 0.8,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 20,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": {
+        "Path": "/usr/local/bin/myapp"
+      },
+      "uid": 0
+    },
+    "object": {
+      "File": {
+        "pattern": {
+          "Classified": "ProcPidStatus"
+        },
+        "is_sensitive": false
+      }
+    },
+    "action": "FileRead",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Fs",
+      "observation_count": 12,
+      "confidence": 0.6,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 24,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": null,
+      "uid": 0
+    },
+    "object": {
+      "Process": {
+        "binary": {
+          "Path": "/usr/bin/python3"
+        }
+      }
+    },
+    "action": "ProcExec",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Proc",
+      "observation_count": 1,
+      "confidence": 0.3,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 23,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": null,
+      "uid": 0
+    },
+    "object": {
+      "Process": {
+        "binary": {
+          "Path": "/usr/local/bin/myapp"
+        }
+      }
+    },
+    "action": "ProcExec",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Proc",
+      "observation_count": 1,
+      "confidence": 0.3,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 21,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": {
+        "Path": "/usr/local/bin/myapp"
+      },
+      "uid": 0
+    },
+    "object": {
+      "Network": {
+        "dst_ip": 584628317,
+        "dst_port": 443,
+        "protocol": 6,
+        "direction": 1
+      }
+    },
+    "action": "NetConnect",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Net",
+      "observation_count": 12,
+      "confidence": 0.8,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 5,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": {
+        "Path": "/usr/local/bin/myapp"
+      },
+      "uid": 0
+    },
+    "object": {
+      "File": {
+        "pattern": {
+          "Prefix": "/var/lib/myapp/pg_wal/"
+        },
+        "is_sensitive": false
+      }
+    },
+    "action": "FileWrite",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Fs",
+      "observation_count": 8,
+      "confidence": 0.3,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 16,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": {
+        "Path": "/usr/local/bin/myapp"
+      },
+      "uid": 0
+    },
+    "object": {
+      "File": {
+        "pattern": {
+          "Prefix": "/var/log/myapp/"
+        },
+        "is_sensitive": false
+      }
+    },
+    "action": "FileWrite",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Fs",
+      "observation_count": 12,
+      "confidence": 0.6,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 1,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": {
+        "Path": "/usr/local/bin/myapp"
+      },
+      "uid": 0
+    },
+    "object": {
+      "File": {
+        "pattern": {
+          "ExactPath": "/etc/myapp/config.yaml"
+        },
+        "is_sensitive": false
+      }
+    },
+    "action": "FileRead",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Fs",
+      "observation_count": 9,
+      "confidence": 0.6,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 2,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": {
+        "Path": "/usr/local/bin/myapp"
+      },
+      "uid": 0
+    },
+    "object": {
+      "File": {
+        "pattern": {
+          "ExactPath": "/etc/myapp/database.yaml"
+        },
+        "is_sensitive": true
+      }
+    },
+    "action": "FileRead",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Fs",
+      "observation_count": 3,
+      "confidence": 0.6,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 25,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": null,
+      "uid": 0
+    },
+    "object": {
+      "File": {
+        "pattern": {
+          "ExactPath": "/usr/bin/python3"
+        },
+        "is_sensitive": false
+      }
+    },
+    "action": "FileOpen",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Fs",
+      "observation_count": 0,
+      "confidence": 1.0,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 26,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": null,
+      "uid": 0
+    },
+    "object": {
+      "File": {
+        "pattern": {
+          "ExactPath": "/usr/bin/python3"
+        },
+        "is_sensitive": false
+      }
+    },
+    "action": "FileRead",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Fs",
+      "observation_count": 0,
+      "confidence": 1.0,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 27,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": null,
+      "uid": 0
+    },
+    "object": {
+      "File": {
+        "pattern": {
+          "ExactPath": "/usr/local/bin/myapp"
+        },
+        "is_sensitive": false
+      }
+    },
+    "action": "FileOpen",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Fs",
+      "observation_count": 0,
+      "confidence": 1.0,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  },
+  {
+    "id": 28,
+    "subject": {
+      "container": {
+        "CgroupId": 111
+      },
+      "binary": null,
+      "uid": 0
+    },
+    "object": {
+      "File": {
+        "pattern": {
+          "ExactPath": "/usr/local/bin/myapp"
+        },
+        "is_sensitive": false
+      }
+    },
+    "action": "FileRead",
+    "verdict": "Allow",
+    "metadata": {
+      "source_module": "Fs",
+      "observation_count": 0,
+      "confidence": 1.0,
+      "first_seen": 0,
+      "last_seen": 0
+    }
+  }
+]

@@ -1,0 +1,17 @@
+[package]
+name = "ebpf-mon-ebpf"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aya-ebpf = { workspace = true }
+aya-log-ebpf = { workspace = true }
+ebpf-mon-common = { path = "../ebpf-mon-common" }
+network-types = "0.1.0"
+
+[build-dependencies]
+which = { workspace = true }
+
+[[bin]]
+name = "ebpf-mon"
+path = "src/main.rs"

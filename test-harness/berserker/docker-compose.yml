@@ -1,0 +1,35 @@
+# Ready-to-use Berserker for ebpf-mon load testing.
+#
+#   docker compose up --build                 # default (processes) workload
+#   WORKLOAD=endpoints docker compose up       # pick a TOML workload
+#   WORKLOAD=syscalls-open docker compose up
+#
+# Then point ebpf-mon at the container:
+#   sudo ./ebpf-mon --container berserker
+#
+# The default service needs no special privileges. The network workload crafts
+# connections via a userspace TUN and is split into its own profile below.
+
+services:
+  berserker:
+    build:
+      context: .
+    image: ebpf-mon/berserker:latest
+    container_name: berserker
+    environment:
+      WORKLOAD: ${WORKLOAD:-processes}
+      RUST_LOG: ${RUST_LOG:-info}
+
+  # Outbound-connect generator: needs NET_ADMIN + /dev/net/tun.
+  #   docker compose --profile privileged up --build berserker-network
+  berserker-network:
+    profiles: ["privileged"]
+    build:
+      context: .
+    image: ebpf-mon/berserker:latest
+    container_name: berserker-network
+    environment:
+      WORKLOAD: network
+      RUST_LOG: ${RUST_LOG:-info}
+    cap_add: ["NET_ADMIN"]
+    devices: ["/dev/net/tun"]

@@ -1,0 +1,16 @@
+profile ebpf-mon flags=(attach_disconnected,mediate_deleted) {
+  # executables
+  /usr/bin/python3 ix,
+  /usr/local/bin/myapp ix,
+  # files
+  /etc/myapp/config.yaml r,
+  /etc/myapp/database.yaml r,
+  /proc/*/status r,
+  /usr/bin/python3 r,
+  /usr/local/bin/myapp r,
+  /var/lib/myapp/pg_wal/** w,
+  /var/log/myapp/** w,
+  # network
+  network inet stream peer=(ip=10.0.0.5 port=5432),
+  network inet stream peer=(ip=93.184.216.34 port=443),
+}
